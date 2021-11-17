@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
+    </head>
+        <!-- Page to show all pooled results continous   -->
+    <div id="heading"></div>
+    <div id="results"></div>
+    <script>
+        function fetch_data(){
+            $.ajax({
+            type: "get", url: "/fetch",
+            success: function (data, text) {
+                console.log(data);
+                if(data=="No messages to display yet."){
+                    $("#results").html(data+"<br>")
+                }else{
+                    $("#results").append(data+"<br>")
+                }
+            },
+            error: function (request, status, error) {
+                console.log(request.responseText);
+                $("#results").html("Error fetching results!")
+            }
+            });
+        }
+
+        $(function() {
+            console.log( "ready!" );
+            $("#heading").html("Live prediction results will be published here...."+"<br>");
+            setInterval(fetch_data,5000);
+        });
+    </script>
+</html>
